@@ -102,9 +102,11 @@ const Container = styled.div`
 const Scrollable = styled.div`
   height: 100%;
   display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  overflow-x: scroll;
+  flex-flow: row;
+  overflow-y: scroll;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const Text = styled.div<{ size: number }>`
