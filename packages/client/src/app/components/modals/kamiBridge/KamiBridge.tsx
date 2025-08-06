@@ -13,6 +13,7 @@ import { MenuIcons } from 'assets/images/icons/menu';
 import { erc721ABI } from 'network/chain/ERC721';
 import { queryAccountFromEmbedded } from 'network/shapes/Account';
 import { Kami, queryKamiByIndex } from 'network/shapes/Kami';
+import styled from 'styled-components';
 import { Controls } from './Controls';
 import { Mode } from './types';
 import { WildKamis } from './WildKamis';
@@ -183,23 +184,34 @@ export function registerKamiBridge() {
           truncate
           noPadding
         >
-          <WildKamis
-            mode={mode}
-            kamis={{ world: worldKamis, wild: wildKamis }}
-            state={{ selected: selectedKamis, setSelected: setSelectedKamis }}
-          />
-          <Controls
-            actions={{ import: depositTx, export: withdrawTx }}
-            controls={{ mode, setMode }}
-            state={{ selectedKamis }}
-          />
-          <WorldKamis
-            mode={mode}
-            kamis={{ world: worldKamis, wild: wildKamis }}
-            state={{ selected: selectedKamis, setSelected: setSelectedKamis }}
-          />
+          <HorizontalContainer>
+            <WildKamis
+              mode={mode}
+              kamis={{ world: worldKamis, wild: wildKamis }}
+              state={{ selected: selectedKamis, setSelected: setSelectedKamis }}
+            />
+            <Controls
+              actions={{ import: depositTx, export: withdrawTx }}
+              controls={{ mode, setMode }}
+              state={{ selectedKamis }}
+            />
+            <WorldKamis
+              mode={mode}
+              kamis={{ world: worldKamis, wild: wildKamis }}
+              state={{ selected: selectedKamis, setSelected: setSelectedKamis }}
+            />
+          </HorizontalContainer>
         </ModalWrapper>
       );
     }
   );
 }
+const HorizontalContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 15vw;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1vw;
+`;

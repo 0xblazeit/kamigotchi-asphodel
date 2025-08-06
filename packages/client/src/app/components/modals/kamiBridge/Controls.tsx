@@ -23,10 +23,6 @@ export const Controls = (props: Props) => {
   const { mode, setMode } = controls;
   const { selectedKamis } = state;
 
-  const handleToggle = () => {
-    setMode(mode === 'IMPORT' ? 'EXPORT' : 'IMPORT');
-  };
-
   const handleAction = () => {
     if (mode === 'IMPORT') actions.import(selectedKamis);
     else actions.export(selectedKamis);
@@ -34,8 +30,6 @@ export const Controls = (props: Props) => {
 
   return (
     <Container>
-      <ActionButton onClick={handleToggle} text={'Filters'} disabled />
-      <ActionButton onClick={handleToggle} text={mode === 'IMPORT' ? '↓' : '↑'} />
       <ActionButton
         onClick={handleAction}
         text={mode === 'IMPORT' ? 'Import' : 'Export'}
@@ -47,13 +41,12 @@ export const Controls = (props: Props) => {
 
 const Container = styled.div`
   position: relative;
-  border-top: solid black 0.15vw;
-  border-bottom: solid black 0.15vw;
-  width: 100%;
-  padding: 0.6vw;
-
+  width: 20%;
+  height: 100%;
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-around;
+  flex-flow: column nowrap;
+  justify-content: center;
   align-items: center;
+  border-left: solid black 0.15vw;
+  border-right: solid black 0.15vw;
 `;

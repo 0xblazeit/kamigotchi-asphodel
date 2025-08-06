@@ -27,11 +27,7 @@ export const WorldKamis = (props: Props) => {
   const [displayed, setDisplayed] = useState<Kami[]>([]);
 
   useEffect(() => {
-    if (mode === 'IMPORT') setDisplayed(selected);
-    else {
-      const remaining = world.filter((kami) => !selected.includes(kami));
-      setDisplayed(remaining);
-    }
+    setDisplayed(world);
   }, [mode, world, selected]);
 
   /////////////////
@@ -59,8 +55,8 @@ export const WorldKamis = (props: Props) => {
   };
 
   const getCount = () => {
-    if (mode === 'EXPORT') return `${world.length}`;
-    else return `${world.length}+${selected.length}`;
+    return `${world.length}`;
+    //return `${world.length}+${selected.length}`;
   };
 
   /////////////////
@@ -93,8 +89,8 @@ export const WorldKamis = (props: Props) => {
 
 const Container = styled.div`
   position: relative;
-  width: 100%;
-  height: 15vw;
+  width: 40%;
+  height: 100%;
   display: flex;
   flex-flow: column nowrap;
 `;
@@ -107,6 +103,7 @@ const Scrollable = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 2.5vw;
 `;
 
 const Text = styled.div<{ size: number }>`

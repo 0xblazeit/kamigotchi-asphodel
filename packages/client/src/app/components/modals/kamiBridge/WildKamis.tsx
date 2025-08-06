@@ -26,11 +26,7 @@ export const WildKamis = (props: Props) => {
   const [displayed, setDisplayed] = useState<Kami[]>([]);
 
   useEffect(() => {
-    if (mode === 'EXPORT') setDisplayed(selected);
-    else {
-      const remainingKamis = wild.filter((kami) => !selected.includes(kami));
-      setDisplayed(remainingKamis);
-    }
+    setDisplayed(wild);
   }, [mode, wild, selected]);
 
   /////////////////
@@ -54,8 +50,8 @@ export const WildKamis = (props: Props) => {
   };
 
   const getCount = () => {
-    if (mode === 'IMPORT') return `${wild.length}`;
-    else return `${wild.length}+${selected.length}`;
+    return `${wild.length}`;
+    // return `${wild.length}+${selected.length}`;
   };
 
   /////////////////
@@ -84,8 +80,8 @@ export const WildKamis = (props: Props) => {
 
 const Container = styled.div`
   position: relative;
-  width: 100%;
-  height: 15vw;
+  width: 40%;
+  height: 100%;
   display: flex;
   flex-flow: column nowrap;
 `;
@@ -95,7 +91,8 @@ const Scrollable = styled.div`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  overflow-x: scroll;
+  overflow-y: scroll;
+  margin-top: 2.5vw;
 `;
 
 const Text = styled.div<{ size: number }>`
