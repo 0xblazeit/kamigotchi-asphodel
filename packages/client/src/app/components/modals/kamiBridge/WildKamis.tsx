@@ -14,30 +14,30 @@ interface Props {
     world: Kami[];
   };
   state: {
-    selected: Kami[];
-    setSelected: (kamis: Kami[]) => void;
+    selectedWild: Kami[];
+    setSelectedWild: (kamis: Kami[]) => void;
   };
 }
 
 export const WildKamis = (props: Props) => {
   const { kamis, state, mode } = props;
   const { world, wild } = kamis;
-  const { selected, setSelected } = state;
+  const { selectedWild, setSelectedWild } = state;
   const [displayed, setDisplayed] = useState<Kami[]>([]);
 
   useEffect(() => {
     setDisplayed(wild);
-  }, [mode, wild, selected]);
+  }, [mode, wild, selectedWild]);
 
   /////////////////
   // HANDLERS
 
   const handleSelect = (kami: Kami) => {
     playClick();
-    if (selected.includes(kami)) {
-      setSelected(selected.filter((k) => k !== kami));
+    if (selectedWild.includes(kami)) {
+      setSelectedWild(selectedWild.filter((k) => k !== kami));
     } else {
-      setSelected([...selected, kami]);
+      setSelectedWild([...selectedWild, kami]);
     }
   };
 
@@ -67,7 +67,10 @@ export const WildKamis = (props: Props) => {
           <KamiBlock
             key={kami.index}
             kami={kami}
-            select={{ isSelected: mode === 'EXPORT', onClick: () => handleSelect(kami) }}
+            select={{
+              //isSelected: mode === 'EXPORT',
+              onClick: () => handleSelect(kami),
+            }}
           />
         ))}
       </Scrollable>

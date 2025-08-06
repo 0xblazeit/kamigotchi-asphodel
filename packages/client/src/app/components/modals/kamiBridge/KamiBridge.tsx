@@ -15,7 +15,6 @@ import { queryAccountFromEmbedded } from 'network/shapes/Account';
 import { Kami, queryKamiByIndex } from 'network/shapes/Kami';
 import styled from 'styled-components';
 import { Controls } from './Controls';
-import { Mode } from './types';
 import { WildKamis } from './WildKamis';
 import { WorldKamis } from './WorldKamis';
 
@@ -65,8 +64,8 @@ export function registerKamiBridge() {
 
       const [worldKamis, setWorldKamis] = useState<Kami[]>([]);
       const [wildKamis, setWildKamis] = useState<Kami[]>([]);
-      const [selectedKamis, setSelectedKamis] = useState<Kami[]>([]);
-      const [mode, setMode] = useState<Mode>('IMPORT');
+      const [selectedWildKamis, setSelectedWildKamis] = useState<Kami[]>([]);
+      const [selectedWorldKamis, setSelectedWorldKamis] = useState<Kami[]>([]);
       const [tick, setTick] = useState(Date.now());
 
       /////////////////
@@ -101,8 +100,9 @@ export function registerKamiBridge() {
       // clear out the selected kamis whenever the mode changes or the modal is opened
       useEffect(() => {
         if (!modals.bridgeERC721) return;
-        setSelectedKamis([]);
-      }, [modals.bridgeERC721, mode]);
+        setSelectedWildKamis([]);
+        setSelectedWorldKamis([]);
+      }, [modals.bridgeERC721]);
 
       // refresh world kamis every tick
       useEffect(() => {
@@ -185,20 +185,19 @@ export function registerKamiBridge() {
           noPadding
         >
           <HorizontalContainer>
-            <WildKamis
-              mode={mode}
+            <WorldKamis
+              mode={'IMPORT'}
               kamis={{ world: worldKamis, wild: wildKamis }}
-              state={{ selected: selectedKamis, setSelected: setSelectedKamis }}
+              state={{ selectedWorld: selectedWorldKamis, setSelectedWorld: setSelectedWorldKamis }}
             />
             <Controls
               actions={{ import: depositTx, export: withdrawTx }}
-              controls={{ mode, setMode }}
-              state={{ selectedKamis }}
+              state={{ selectedWild: selectedWildKamis, selectedWorld: selectedWorldKamis }}
             />
-            <WorldKamis
-              mode={mode}
+            <WildKamis
+              mode={'EXPORT'}
               kamis={{ world: worldKamis, wild: wildKamis }}
-              state={{ selected: selectedKamis, setSelected: setSelectedKamis }}
+              state={{ selectedWild: selectedWildKamis, setSelectedWild: setSelectedWildKamis }}
             />
           </HorizontalContainer>
         </ModalWrapper>
@@ -206,6 +205,7 @@ export function registerKamiBridge() {
     }
   );
 }
+
 const HorizontalContainer = styled.div`
   display: flex;
   flex-direction: row;

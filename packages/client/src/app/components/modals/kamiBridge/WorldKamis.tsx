@@ -15,30 +15,30 @@ interface Props {
     world: Kami[];
   };
   state: {
-    selected: Kami[];
-    setSelected: (kamis: Kami[]) => void;
+    selectedWorld: Kami[];
+    setSelectedWorld: (kamis: Kami[]) => void;
   };
 }
 
 export const WorldKamis = (props: Props) => {
   const { kamis, state, mode } = props;
   const { world, wild } = kamis;
-  const { selected, setSelected } = state;
+  const { selectedWorld, setSelectedWorld } = state;
   const [displayed, setDisplayed] = useState<Kami[]>([]);
 
   useEffect(() => {
     setDisplayed(world);
-  }, [mode, world, selected]);
+  }, [mode, world, selectedWorld]);
 
   /////////////////
   // HANDLERS
 
   const handleSelect = (kami: Kami) => {
     playClick();
-    if (selected.includes(kami)) {
-      setSelected(selected.filter((k) => k !== kami));
+    if (selectedWorld.includes(kami)) {
+      setSelectedWorld(selectedWorld.filter((k) => k !== kami));
     } else {
-      setSelected([...selected, kami]);
+      setSelectedWorld([...selectedWorld, kami]);
     }
   };
 
@@ -46,7 +46,7 @@ export const WorldKamis = (props: Props) => {
   // INTERPRETATION
 
   const isDisabled = (kami: Kami) => {
-    return mode === 'EXPORT' && !isResting(kami);
+    return !isResting(kami);
   };
 
   const getEmptyText = () => {
@@ -74,7 +74,7 @@ export const WorldKamis = (props: Props) => {
             kami={kami}
             select={{
               isDisabled: isDisabled(kami),
-              isSelected: mode === 'IMPORT',
+              // isSelected: mode === 'IMPORT',
               onClick: () => handleSelect(kami),
             }}
           />

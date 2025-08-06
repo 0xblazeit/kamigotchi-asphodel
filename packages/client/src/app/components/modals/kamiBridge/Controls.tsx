@@ -2,42 +2,43 @@ import styled from 'styled-components';
 
 import { ActionButton } from 'app/components/library';
 import { Kami } from 'network/shapes/Kami';
-import { Mode } from './types';
 
 interface Props {
   actions: {
     import: (kamis: Kami[]) => void;
     export: (kamis: Kami[]) => void;
   };
-  controls: {
-    mode: Mode;
-    setMode: (mode: Mode) => void;
-  };
+
   state: {
-    selectedKamis: Kami[];
+    selectedWild: Kami[];
+    selectedWorld: Kami[];
   };
 }
 
 export const Controls = (props: Props) => {
-  const { actions, controls, state } = props;
-  const { mode, setMode } = controls;
-  const { selectedKamis } = state;
+  const { actions, state } = props;
 
+  const { selectedWild, selectedWorld } = state;
+
+  // this allows importing and exporting at the same time
   const handleAction = () => {
-    if (mode === 'IMPORT') actions.import(selectedKamis);
-    else actions.export(selectedKamis);
+    const kamisToImport = selectedWild.filter((kami) => selectedWild.includes(kami));
+    const kamisToExport = selectedWorld.filter((kami) => selectedWorld.includes(kami));
+    if (kamisToImport.length > 0) {
+      actions.import(kamisToImport);
+    }
+    if (kamisToExport.length > 0) {
+      actions.export(kamisToExport);
+    }
   };
-  const toggleMode = () => {
-    setMode(mode === 'IMPORT' ? 'EXPORT' : 'IMPORT');
-  };
+
   return (
     <Container>
       <ActionButton
         onClick={handleAction}
-        text={mode === 'IMPORT' ? 'Import' : 'Export'}
-        disabled={selectedKamis.length == 0}
+        text='Transfer'
+        disabled={selectedWild.length === 0 && selectedWorld.length === 0}
       />
-      <ActionButton onClick={toggleMode} text={mode === 'IMPORT' ? '↓' : '↑'} />
     </Container>
   );
 };
