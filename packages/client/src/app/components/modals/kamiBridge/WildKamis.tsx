@@ -81,18 +81,24 @@ export const WildKamis = (props: Props) => {
 const Container = styled.div`
   position: relative;
   width: 40%;
-  height: 100%;
+
   display: flex;
   flex-flow: column nowrap;
 `;
 
 const Scrollable = styled.div`
-  height: 100%;
   display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
+  flex-flow: row;
   overflow-y: scroll;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-top: 2.5vw;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Text = styled.div<{ size: number }>`

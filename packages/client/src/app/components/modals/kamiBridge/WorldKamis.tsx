@@ -104,6 +104,11 @@ const Scrollable = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 2.5vw;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Text = styled.div<{ size: number }>`

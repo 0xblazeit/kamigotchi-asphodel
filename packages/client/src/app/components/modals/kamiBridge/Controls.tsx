@@ -27,7 +27,9 @@ export const Controls = (props: Props) => {
     if (mode === 'IMPORT') actions.import(selectedKamis);
     else actions.export(selectedKamis);
   };
-
+  const toggleMode = () => {
+    setMode(mode === 'IMPORT' ? 'EXPORT' : 'IMPORT');
+  };
   return (
     <Container>
       <ActionButton
@@ -35,6 +37,7 @@ export const Controls = (props: Props) => {
         text={mode === 'IMPORT' ? 'Import' : 'Export'}
         disabled={selectedKamis.length == 0}
       />
+      <ActionButton onClick={toggleMode} text={mode === 'IMPORT' ? '↓' : '↑'} />
     </Container>
   );
 };
@@ -49,4 +52,5 @@ const Container = styled.div`
   align-items: center;
   border-left: solid black 0.15vw;
   border-right: solid black 0.15vw;
+  overflow: hidden;
 `;

@@ -210,7 +210,7 @@ const HorizontalContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 15vw;
+  height: 33vw;
   align-items: stretch;
   justify-content: space-between;
   gap: 1vw;
